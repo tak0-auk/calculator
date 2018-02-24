@@ -7,23 +7,29 @@ const MINUS: &'static str = "-";
 const AS: &'static str = "*";
 const SR: &'static str = "/";
 
+#[derive(Debug)]
+struct Node {
+    value: String,
+    left: Box<Node>,
+    right: Box<Node>,
+}
+
 fn main() {
 
     let mut input = String::new();
 
     let _ = io::stdin().read_line(&mut input);
     let chars: Vec<char> = input.replace(" ", "").trim().chars().collect();
-    let mut token:Vec<String> = Vec::new();
+    let mut token: Vec<String> = Vec::new();
     let mut num: Vec<i64> = Vec::new();
     let mut number: String = String::new();
-    let mut ob_cnt = 0;
-    let mut cb_cnt = 0;
+
     for s in chars {
         match s.to_string().as_ref() {
             OB | CB | PLUS | MINUS | AS| SR => {
                 if number.len() > 0 {
-                token.push(number.clone());
-                number.clear();
+                    token.push(number.clone());
+                    number.clear();
                 }
                 token.push(s.to_string());
                 },
@@ -34,10 +40,6 @@ fn main() {
     token.push(number.clone());
 
     // let i = &number.parse::<i64>().unwrap().clone();
-
-    if ob_cnt != cb_cnt {
-        panic!("not ");
-    }
 
     let mut res = 0;
     let mut left = 0;
